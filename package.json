@@ -2,5 +2,8 @@
   "name": "sp-test-suite",
   "auth": "gameduell",
   "description": "Basic test setup to test singleplayer games functionality",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "dependencies": {
+    
+  }
 }
