@@ -14,20 +14,25 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
 
-    // list of files / patterns to load in the browser
-    files: [
-        {
-            pattern : '**/*.*',
-            included : false,
-            served : true
-        },
-        'node_modules/sp-test-suite/game-testsuiteSpec.js'
-    ],
+      // list of files / patterns to load in the browser
+      files: [
+          {
+              pattern : '*.js',
+              included : false,
+              served : true
+          },
+          {
+              pattern : '**/*.*',
+              included : false,
+              served : true
+          },
+          'node_modules/sp-test-suite/game-testsuiteSpec.js'
+      ],
 
-    // list of files to exclude
-    exclude: [
-        'node_modules'
-    ],
+      // list of files to exclude
+      exclude: [
+          'node_modules/**/*.*'
+      ],
 
 
     // preprocess matching files before serving them to the browser
