@@ -31,7 +31,8 @@ module.exports = function(config) {
 
       // list of files to exclude
       exclude: [
-          'node_modules/**/*.*'
+          // TODO actually, it would be nice to exclude all of node_modules (except the stuff explicitely included
+          // above) here - but then karma/jasmine cannot access their own files
       ],
 
 

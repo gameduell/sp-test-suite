@@ -12,7 +12,7 @@ describe('jwl', function() {
         var node = document.createElement('script');
         node.type = "text/javascript";
         node.async = true;
-        node.setAttribute('src', 'base/src/main/resources/META-INF/resources/games/singleplayer/jwl/game.js');
+        node.setAttribute('src', 'base/game.js');
         node.addEventListener('load', cb, false);
         node.addEventListener('error', function() {
             fail('Failed to load game.js');
@@ -42,7 +42,7 @@ describe('jwl', function() {
      */
     function createGameInstance() {
         return Game.jwl.createInstance({
-            mediaURL: 'base/src/main/resources/META-INF/resources/games/singleplayer/jwl/',
+            mediaURL: 'base/',
             language: 'de',
             width : '780px',
             height : '524px',
