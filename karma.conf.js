@@ -17,11 +17,11 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         {
-            pattern : 'src/main/resources/META-INF/resources/games/singleplayer/jwl/**/*.*',
+            pattern : '**/*.*',
             included : false,
             served : true
         },
-        'game-testsuiteSpec.js'
+        'node_modules/sp-test-suite/game-testsuiteSpec.js'
     ],
 
     // list of files to exclude
