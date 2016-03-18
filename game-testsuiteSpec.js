@@ -83,7 +83,7 @@ describe('Html5 SP game test suite', function() {
 
     it('test config exists', function() {
         expect(testsuite.config).toBeDefined();
-        ['gamejs', 'gameInstanceFactoryFqcn', 'validSet', 'invalidSet', 'expectedGameApiFunctions', 'unexpectedGameApiFunctions']
+        ['gamelibs', 'gameInstanceFactoryFqcn', 'validSet', 'invalidSet', 'expectedGameApiFunctions', 'unexpectedGameApiFunctions']
             .forEach(function(configProperty) {
                 expect(testsuite.config[configProperty]).toBeDefined();
             });
