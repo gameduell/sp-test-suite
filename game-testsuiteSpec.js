@@ -100,40 +100,52 @@ describe('Html5 SP game test suite', function() {
             expect(typeof gameInstance[functionName]).toEqual('function');
         }
 
-        it('onGameEvent', function() {
-            expectGameApiFunction("onGameEvent");
+        describe('all lifecycle functions must be defined', function() {
+            it('onGameEvent', function() {
+                expectGameApiFunction("onGameEvent");
+            });
+
+            it('startGame', function() {
+                expectGameApiFunction('startGame');
+            });
+
+            it('forceGameStart', function() {
+                expectGameApiFunction('forceGameStart');
+            });
+
+            it('gameAbort', function () {
+                expectGameApiFunction('gameAbort');
+            });
+
+            it('stopGame', function () {
+                expectGameApiFunction('stopGame');
+            });
         });
 
-        it('startGame', function() {
-            expectGameApiFunction('startGame');
-        });
+        describe('only required non-lifecycle functions must exist', function() {
+            function checkNonLifecycleFunction(functionName) {
+                if (testsuite.config.expectedGameApiFunctions.indexOf(functionName) !== -1) {
+                    expectGameApiFunction(functionName);
+                } else if (testsuite.config.unexpectedGameApiFunctions.indexOf(functionName) !== -1) {
+                    expect(gameInstance.hasOwnProperty(functionName)).toBeFalsy();
+                }
+            }
 
-        it('forceGameStart', function() {
-            expectGameApiFunction('forceGameStart');
-        });
+            it('setSoundOn', function() {
+                checkNonLifecycleFunction('setSoundOn');
+            });
 
-        it('gameAbort', function () {
-            expectGameApiFunction('gameAbort');
-        });
+            it('setFxOn', function() {
+                checkNonLifecycleFunction('setFxOn');
+            });
 
-        it('stopGame', function () {
-            expectGameApiFunction('stopGame');
-        });
+            it('setColorBlindOn', function() {
+                checkNonLifecycleFunction('setColorBlindOn');
+            });
 
-        it('setSoundOn', function() {
-            expectGameApiFunction('setSoundOn');
-        });
-
-        it('setFxOn', function() {
-            expectGameApiFunction('setFxOn');
-        });
-
-        it('setColorBlindOn', function() {
-            expectGameApiFunction('setColorBlindOn');
-        });
-
-        it('setGameDimensions', function () {
-            expectGameApiFunction('setGameDimensions');
+            it('setGameDimensions', function () {
+                checkNonLifecycleFunction('setGameDimensions');
+            });
         });
     });
 
