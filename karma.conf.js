@@ -1,6 +1,4 @@
 // Karma configuration
-// Generated on Wed Mar 09 2016 17:50:13 GMT+0100 (CET)
-
 module.exports = function(config) {
   config.set({
 
@@ -26,6 +24,7 @@ module.exports = function(config) {
               included : false,
               served : true
           },
+          'game-testSuite-config.js',
           'node_modules/sp-test-suite/game-testsuiteSpec.js'
       ],
 
