@@ -5,19 +5,28 @@ describe('Html5 SP game test suite', function() {
 
     /**
      * Trigger loading of game.js.
-     * @param cb executed on *successfull* loading of game.js (but does not mean that parsing succeeded, too). On error
+     * @param downloadsFinishedCallback executed on *successfull* loading of game.js (but does not mean that parsing succeeded, too). On error
      * a fail call is done.
      */
-    function loadGameJs(cb) {
-        var node = document.createElement('script');
-        node.type = "text/javascript";
-        node.async = true;
-        node.setAttribute('src', 'base/' + testsuite.config.gamejs);
-        node.addEventListener('load', cb, false);
-        node.addEventListener('error', function() {
-            fail('Failed to load game code');
-        }, true);
-        document.head.appendChild(node);
+    function loadGameJsFiles(downloadsFinishedCallback) {
+        var expectedDownloads = testsuite.config.gamelibs.length;
+        function downloadFinished() {
+            expectedDownloads--;
+            if (expectedDownloads === 0) {
+                downloadsFinishedCallback();
+            }
+        }
+        testsuite.config.gamelibs.forEach(function(libFile) {
+		    var node = document.createElement('script');
+		    node.type = "text/javascript";
+		    node.async = true;
+		        node.setAttribute('src', 'base/' + libFile);
+		        node.addEventListener('load', downloadFinished, false);
+		    node.addEventListener('error', function() {
+		            fail('Failed to load game lib ' + libFile);
+		    }, true);
+		    document.head.appendChild(node);
+        });
     }
 
     function addGameContainerNode() {
@@ -33,7 +42,7 @@ describe('Html5 SP game test suite', function() {
 
     beforeEach(function(done) {
         addGameContainerNode();
-        loadGameJs(done);
+        loadGameJsFiles(done);
     });
 
     function lookupGameInstanceFactory() {
