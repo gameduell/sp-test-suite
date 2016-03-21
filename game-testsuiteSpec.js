@@ -73,6 +73,16 @@ describe('Html5 SP game test suite', function() {
     }
 
     /**
+     * Matcher for Jasmine: if an expected value can be either null or undefined
+     * @type {{asymmetricMatch: undefinedOrNullTester.asymmetricMatch}}
+     */
+    var undefinedOrNullTester = {
+        asymmetricMatch: function(actual) {
+            return actual === undefined || actual === null;
+        }
+    };
+
+    /**
      * Cleanup, removed gameContainerNode and deletes window.Game
      */
     afterEach(function() {
@@ -176,11 +186,6 @@ describe('Html5 SP game test suite', function() {
                 gameInstance.onGameEvent(eventsListener.onGameEvent);
             });
             it('there was a loaded event', function() {
-                var undefinedOrNullTester = {
-                    asymmetricMatch: function(actual) {
-                        return actual === undefined || actual === null;
-                    }
-                };
                 expect(eventsListener.onGameEvent).toHaveBeenCalledWith('loaded', undefinedOrNullTester);
             });
         });
@@ -246,7 +251,7 @@ describe('Html5 SP game test suite', function() {
                 gameInstance.onGameEvent(eventsListener.onGameEvent);
             });
             it('there was a start event', function() {
-                expect(eventsListener.onGameEvent).toHaveBeenCalledWith('start', undefined);
+                expect(eventsListener.onGameEvent).toHaveBeenCalledWith('start', undefinedOrNullTester);
             });
         });
 
@@ -281,7 +286,7 @@ describe('Html5 SP game test suite', function() {
                 gameInstance.onGameEvent(eventsListener.onGameEvent);
             });
             it('there was an abort event but no end event', function() {
-                expect(eventsListener.onGameEvent).toHaveBeenCalledWith('start', undefined);
+                expect(eventsListener.onGameEvent).toHaveBeenCalledWith('start', undefinedOrNullTester);
                 expect(eventsListener.onGameEvent).toHaveBeenCalledWith('abort', jasmine.objectContaining(
                     {
                         score : jasmine.any(Number),
