@@ -31,13 +31,12 @@ describe('Html5 SP game test suite', function() {
 
     function addGameContainerNode() {
         gameContainerNode = document.createElement('div');
-        // TODO check if id is the same for all games
-        gameContainerNode.id = 'main_container';
+        gameContainerNode.id = testsuite.config.gameContainerId;
         // TODO must be dynamic
         gameContainerNode.style.width = '780px';
         gameContainerNode.style.height = '524px';
         document.body.appendChild(gameContainerNode);
-        expect(document.getElementById('main_container')).not.toBeNull();
+        expect(document.getElementById(testsuite.config.gameContainerId)).not.toBeNull();
     }
 
     beforeEach(function(done) {
@@ -77,7 +76,7 @@ describe('Html5 SP game test suite', function() {
      * Cleanup, removed gameContainerNode and deletes window.Game
      */
     afterEach(function() {
-        document.body.removeChild(document.getElementById('main_container'));
+        document.body.removeChild(document.getElementById(testsuite.config.gameContainerId));
         delete window[testsuite.config.gameInstanceFactoryFqcn.split('.')[0]];
     });
 
@@ -91,6 +90,7 @@ describe('Html5 SP game test suite', function() {
 
     describe('an instance of the game can be created', function() {
         it('an instance of the game can be created', function() {
+            expect(document.getElementById(testsuite.config.gameContainerId)).toBeDefined();
             var gameInstance = createGameInstance();
             expect(gameInstance).toBeDefined();
         });
@@ -105,7 +105,7 @@ describe('Html5 SP game test suite', function() {
         });
 
         function expectGameApiFunction(functionName) {
-            expect(gameInstance.hasOwnProperty(functionName)).toBeTruthy();
+            expect(gameInstance[functionName]).toBeDefined();
             expect(typeof gameInstance[functionName]).toEqual('function');
         }
 
@@ -176,7 +176,12 @@ describe('Html5 SP game test suite', function() {
                 gameInstance.onGameEvent(eventsListener.onGameEvent);
             });
             it('there was a loaded event', function() {
-                expect(eventsListener.onGameEvent).toHaveBeenCalledWith('loaded', undefined);
+                var undefinedOrNullTester = {
+                    asymmetricMatch: function(actual) {
+                        return actual === undefined || actual === null;
+                    }
+                };
+                expect(eventsListener.onGameEvent).toHaveBeenCalledWith('loaded', undefinedOrNullTester);
             });
         });
 
@@ -208,7 +213,7 @@ describe('Html5 SP game test suite', function() {
                     }
                 });
                 it('error event received', function() {
-                    expect(listener.onGameEvent).toHaveBeenCalledWith('error');
+                    expect(listener.onGameEvent).toHaveBeenCalledWith('error', 'loading_error');
                 });
             });
         });
@@ -222,10 +227,7 @@ describe('Html5 SP game test suite', function() {
                         switch (eventName) {
                             case 'loaded':
                                 gameInstance.startGame({ gameSet: testsuite.config.validSet }, { showTips: true });
-                                // give the game a few secs time for processing
-                                setTimeout(function () {
-                                    gameInstance.forceGameStart();
-                                }, 2000);
+                                gameInstance.forceGameStart();
                                 break;
                             case 'start':
                                 done();
@@ -260,10 +262,7 @@ describe('Html5 SP game test suite', function() {
                         switch (eventName) {
                             case 'loaded':
                                 gameInstance.startGame({gameSet: testsuite.config.validSet}, {showTips: true});
-                                // give the game a few secs time for processing
-                                setTimeout(function () {
-                                    gameInstance.forceGameStart();
-                                }, 2000);
+                                gameInstance.forceGameStart();
                                 break;
                             case 'start':
                                 gameInstance.gameAbort();
