@@ -2,8 +2,12 @@
   "name": "sp-test-suite",
   "auth": "gameduell",
   "description": "Basic test setup to test singleplayer games functionality",
+  "scripts" : {
+    "test" : "karma start"
+  },
   "version": "0.0.1",
   "dependencies": {
+    "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.2",
