@@ -5,7 +5,7 @@
   "scripts" : {
     "test" : "karma start"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
