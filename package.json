@@ -7,7 +7,7 @@
   },
   "version": "0.0.2",
   "dependencies": {
-    "jasmine": "^2.4.1",
+    "jasmine": "^2.4.1 <2.5.0",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.2",

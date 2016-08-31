@@ -1,7 +1,8 @@
 describe('Html5 SP game test suite', function() {
     'use strict';
 
-    var gameContainerNode;
+    var gameContainerNode,
+        audioContextSingleton;
 
     /**
      * Trigger loading of game.js.
@@ -38,6 +39,25 @@ describe('Html5 SP game test suite', function() {
         document.body.appendChild(gameContainerNode);
         expect(document.getElementById(testsuite.config.gameContainerId)).not.toBeNull();
     }
+
+    /**
+     * Create one AudioContext and then override window.AudioContext to always return
+     * that one instance.
+     * If we would not be doing this, the test browser (at least for Chrome) would soon
+     * run out of resources (only 6 AudioContexts allowed).
+     * @returns {*}
+     */
+    function setupAudioContextMocking() {
+        var audioCtx = new AudioContext();
+        spyOn(window, 'AudioContext').and.callFake(function() {
+            return audioContextSingleton;
+        });
+        return audioCtx;
+    }
+
+    beforeAll(function() {
+        audioContextSingleton = setupAudioContextMocking();
+    });
 
     beforeEach(function(done) {
         addGameContainerNode();
